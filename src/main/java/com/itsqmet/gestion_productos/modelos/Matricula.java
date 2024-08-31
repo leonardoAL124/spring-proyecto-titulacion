@@ -1,22 +1,17 @@
 package com.itsqmet.gestion_productos.modelos;
 
-import java.io.Serializable;
 import java.util.Date;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
 @Entity
-public class Matricula implements Serializable {
+public class Matricula {
 
     @Id
     private int idMatricula;
-    private Date fechaMatriculacion;
+    private Date fechaMatricula;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "idEstudiante")

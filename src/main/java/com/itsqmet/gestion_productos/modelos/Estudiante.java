@@ -1,14 +1,11 @@
 package com.itsqmet.gestion_productos.modelos;
 
-import java.io.Serializable;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
 @Entity
-public class Estudiante implements Serializable {
+public class Estudiante {
 
     @Id
     private int idEstudiante;
