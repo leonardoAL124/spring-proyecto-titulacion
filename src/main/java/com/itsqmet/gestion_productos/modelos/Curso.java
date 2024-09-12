@@ -1,13 +1,11 @@
 package com.itsqmet.gestion_productos.modelos;
 
-import java.io.Serializable;
-
 import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
 @Entity
-public class Curso implements Serializable {
+public class Curso {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
