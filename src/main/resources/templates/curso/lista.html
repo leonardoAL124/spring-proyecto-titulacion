@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Estudiantes</title>
+  <title>Cursos</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -24,6 +24,7 @@
           <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">Estudiantes</a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="/estudiante/form">Formulario</a></li>
+            <li><a class="dropdown-item" href="/estudiante/lista">Lista</a></li>
           </ul>
         </li>
         <li class="nav-item dropdown">
@@ -44,7 +45,6 @@
           <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">Cursos</a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="/curso/form">Formulario</a></li>
-            <li><a class="dropdown-item" href="/curso/lista">Lista</a></li>
           </ul>
         </li>
         <li class="nav-item dropdown">
@@ -58,31 +58,27 @@
     </div>
   </nav>
 
-  <div class="container mt-3">
-    <h2>Lista de estudiantes</h2>
+  <div class="container mt-3 col-lg-8">
+    <h2>Lista de cursos</h2>
     <p>Tenga cuidado al realizar alguna acción!</p>
     <table class="table table-striped">
       <thead>
         <tr>
           <th>ID</th>
           <th>Nombre</th>
-          <th>Apellido</th>
-          <th>Email</th>
-          <th>Telefono</th>
-          <th>Cedula</th>
+          <th>Descripción</th>
+          <th>Creditos</th>
         </tr>
       </thead>
       <tbody>
-        <tr th:each="estudiante:${estudiantes}">
-          <td th:text="${estudiante.idEstudiante}"></td>
-          <td th:text="${estudiante.nombre}"></td>
-          <td th:text="${estudiante.apellido}"></td>
-          <td th:text="${estudiante.email}"></td>
-          <td th:text="${estudiante.telefono}"></td>
-          <td th:text="${estudiante.cedula}"></td>
+        <tr th:each="curso:${cursos}">
+          <td th:text="${curso.idCurso}"></td>
+          <td th:text="${curso.nombre}"></td>
+          <td th:text="${curso.descripcion}"></td>
+          <td th:text="${curso.creditos}"></td>
           <td>
-            <a class="btn btn-primary" th:href="@{/estudiante/editar/} + ${estudiante.idEstudiante}">Editar</a>
-            <a class="btn btn-danger" th:href="@{/estudiante/eliminar/} + ${estudiante.idEstudiante}">Eliminar</a>
+            <a class="btn btn-primary" th:href="@{/curso/editar/} + ${curso.idCurso}">Editar</a>
+            <a class="btn btn-danger" th:href="@{/curso/eliminar/} + ${curso.idCurso}">Eliminar</a>
           </td>
         </tr>
       </tbody>

@@ -22,11 +22,6 @@ public class CursoServiceImpl implements CursoService {
     }
 
     @Override
-    public Curso updateCurso(Curso curso) {
-        return cursoRepository.save(curso);
-    }
-
-    @Override
     public List<Curso> getCursos() {
         return cursoRepository.findAll();
     }

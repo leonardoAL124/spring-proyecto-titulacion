@@ -11,9 +11,6 @@ public interface AulaService {
     // Guardar
     Aula saveAula(Aula aula);
 
-    // Modificar
-    Aula updateAula(Aula aula);
-
     // Obtener lista de Aulas
     List<Aula> getAulas();
 

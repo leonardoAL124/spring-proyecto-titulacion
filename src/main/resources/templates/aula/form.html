@@ -23,6 +23,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">Estudiantes</a>
                     <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/estudiante/form">Formulario</a></li>
                         <li><a class="dropdown-item" href="/estudiante/lista">Lista</a></li>
                     </ul>
                 </li>
@@ -36,7 +37,6 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">Aulas</a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/aula/form">Formulario</a></li>
                         <li><a class="dropdown-item" href="/aula/lista">Lista</a></li>
                     </ul>
                 </li>
@@ -58,31 +58,24 @@
         </div>
     </nav>
 
-    <form class="container-fluid col-lg-4 col-md-7" method="post" th:object="${estudiante}"
-        th:action="@{/estudiante/form}">
+    <form class="container-fluid col-lg-4 col-md-7" method="post" th:object="${aula}" th:action="@{/aula/form}">
         <div class="mb-3 mt-3">
             <label>ID:</label>
-            <input type="number" class="form-control" th:field="*{idEstudiante}" readonly>
+            <input type="number" class="form-control" th:field="*{idAula}" readonly>
         </div>
         <div class="mb-3 mt-3">
-            <label>Nombre:</label>
-            <input type="text" class="form-control" placeholder="Ingrese el nombre" th:field="*{nombre}">
+            <label>Número de aula:</label>
+            <input type="number" class="form-control" placeholder="Ingrese el número del aula" th:field="*{numeroAula}">
         </div>
         <div class="mb-3 mt-3">
-            <label>Apellido:</label>
-            <input type="text" class="form-control" placeholder="Ingrese el apellido" th:field="*{apellido}">
+            <label>Capacidad:</label>
+            <input type="number" class="form-control" placeholder="Ingrese la capacidad del aula"
+                th:field="*{capacidad}">
         </div>
         <div class="mb-3 mt-3">
-            <label>Email:</label>
-            <input type="email" class="form-control" placeholder="Ingrese el correo electrónico" th:field="*{email}">
-        </div>
-        <div class="mb-3 mt-3">
-            <label>Telefono:</label>
-            <input type="text" class="form-control" placeholder="Ingrese el número de telefono" th:field="*{telefono}">
-        </div>
-        <div class="mb-3 mt-3">
-            <label>Cedula:</label>
-            <input type="text" class="form-control" placeholder="Ingrese la cedula" th:field="*{cedula}">
+            <label>ID del curso:</label>
+            <input type="number" class="form-control" placeholder="Ingrese el ID del curso"
+                th:field="*{curso}">
         </div>
         <br>
         <button type="submit" class="btn btn-primary">Enviar</button>

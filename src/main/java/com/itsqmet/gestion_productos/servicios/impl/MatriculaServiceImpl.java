@@ -22,11 +22,6 @@ public class MatriculaServiceImpl implements MatriculaService {
     }
 
     @Override
-    public Matricula updateMatricula(Matricula matricula) {
-        return matriculaRepository.save(matricula);
-    }
-
-    @Override
     public List<Matricula> getMatriculas() {
         return matriculaRepository.findAll();
     }

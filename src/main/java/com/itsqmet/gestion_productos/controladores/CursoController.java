@@ -1,16 +1,16 @@
 package com.itsqmet.gestion_productos.controladores;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import com.itsqmet.gestion_productos.modelos.Curso;
 import com.itsqmet.gestion_productos.servicios.impl.CursoServiceImpl;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 @RequestMapping("/curso")
@@ -19,49 +19,41 @@ public class CursoController {
     @Autowired
     CursoServiceImpl cursoServiceImpl;
 
-    @PostMapping("path")
-    public ResponseEntity<Curso> saveCurso(@RequestBody Curso curso) {
-        try {
-            Curso savedCurso = cursoServiceImpl.saveCurso(curso);
-            return new ResponseEntity<>(savedCurso, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    // CREATE
+    @GetMapping("/form")
+    public String showForm(Model model) {
+        model.addAttribute("curso", new Curso());
+        return "curso/form";
     }
 
-    @PutMapping
-    public ResponseEntity<Curso> updateCurso(@RequestBody Curso curso) {
-        try {
-            Curso updatedCurso = cursoServiceImpl.updateCurso(curso);
-            return new ResponseEntity<>(updatedCurso, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    @PostMapping("/form")
+    public String saveCurso(Curso curso) {
+        cursoServiceImpl.saveCurso(curso);
+        return "redirect:/curso/lista";
     }
 
-    @GetMapping
-    public ResponseEntity<List<Curso>> getAllCurso() {
-        return new ResponseEntity<>(cursoServiceImpl.getCursos(), HttpStatus.OK);
+    //READ
+    @GetMapping("/lista")
+    public String getAllCursos(Model model) {
+        List<Curso> cursos = cursoServiceImpl.getCursos();
+        model.addAttribute("cursos", cursos);
+        return "curso/lista";
     }
+    
 
-    @GetMapping("/{idCurso}")
-    public ResponseEntity<Curso> getCursoById(@PathVariable int idCurso) {
-        Optional<Curso> curso = cursoServiceImpl.getCursoById(idCurso);
-        if (curso.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(curso.get(), HttpStatus.OK);
+    // UPDATE
+    @GetMapping("/editar/{id}")
+    public String updateCurso(@PathVariable int id, Model model) {
+        Curso curso = cursoServiceImpl.getCursoById(id).get();
+        model.addAttribute("curso", curso);
+        return "curso/form";
     }
-
-    @DeleteMapping("/{idCurso}")
-    public ResponseEntity<Void> deleteCurso(@PathVariable int idCurso) {
-        Optional<Curso> curso = cursoServiceImpl.getCursoById(idCurso);
-        if (curso.isPresent()) {
-            cursoServiceImpl.deleteCurso(curso.get().getIdCurso());
-            return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    
+    // DELETE
+    @GetMapping("/eliminar/{id}")
+    public String deleteCurso(@PathVariable int id) {
+        cursoServiceImpl.deleteCurso(id);
+        return "redirect:/curso/lista";
     }
 
 }

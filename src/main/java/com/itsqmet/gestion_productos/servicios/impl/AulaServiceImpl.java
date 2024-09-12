@@ -23,12 +23,6 @@ public class AulaServiceImpl implements AulaService {
         return aulaRepository.save(aula);
     }
 
-    // Modificar
-    @Override
-    public Aula updateAula(Aula aula) {
-        return aulaRepository.save(aula);
-    }
-
     // Listar todos los objetos
     @Override
     public List<Aula> getAulas() {

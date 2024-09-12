@@ -1,6 +1,6 @@
 package com.itsqmet.gestion_productos.modelos;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -13,7 +13,7 @@ public class Matricula {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idMatricula;
     
-    private Date fechaMatricula;
+    private LocalDate fechaMatricula;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "idEstudiante")

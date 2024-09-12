@@ -1,16 +1,16 @@
 package com.itsqmet.gestion_productos.controladores;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import com.itsqmet.gestion_productos.modelos.Matricula;
 import com.itsqmet.gestion_productos.servicios.impl.MatriculaServiceImpl;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 @RequestMapping("/matricula")
@@ -19,49 +19,42 @@ public class MatriculaController {
     @Autowired
     MatriculaServiceImpl matriculaServiceImpl;
 
-    @PostMapping("path")
-    public ResponseEntity<Matricula> saveMatricula(@RequestBody Matricula matricula) {
-        try {
-            Matricula savedMatricula = matriculaServiceImpl.saveMatricula(matricula);
-            return new ResponseEntity<>(savedMatricula, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    // CREATE
+    @GetMapping("/form")
+    public String showForm(Model model) {
+        model.addAttribute("matricula", new Matricula());
+        return "matricula/form";
     }
-
-    @PutMapping
-    public ResponseEntity<Matricula> updateMatricula(@RequestBody Matricula matricula) {
-        try {
-            Matricula updatedMatricula = matriculaServiceImpl.updateMatricula(matricula);
-            return new ResponseEntity<>(updatedMatricula, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    
+    @PostMapping("/form")
+    public String saveMatricula(Matricula matricula) {
+        matriculaServiceImpl.saveMatricula(matricula);
+        return "redirect:/matricula/lista";
     }
-
-    @GetMapping
-    public ResponseEntity<List<Matricula>> getAllMatriculas() {
-        return new ResponseEntity<>(matriculaServiceImpl.getMatriculas(), HttpStatus.OK);
+    
+    // READ
+    @GetMapping("/lista")
+    public String getAllMatriculas(Model model) {
+        List<Matricula> matriculas = matriculaServiceImpl.getMatriculas();
+        model.addAttribute("matriculas", matriculas);
+        return "matricula/lista";
     }
-
-    @GetMapping("/{idMatricula}")
-    public ResponseEntity<Matricula> getMatriculaById(@PathVariable int idMatricula) {
-        Optional<Matricula> matricula = matriculaServiceImpl.getMatriculaById(idMatricula);
-        if (matricula.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(matricula.get(), HttpStatus.OK);
+    
+    // UPDATE
+    @GetMapping("/editar/{id}")
+    public String updateMatricula(@PathVariable int id, Model model) {
+        Matricula matricula = matriculaServiceImpl.getMatriculaById(id).get();
+        model.addAttribute("matricula", matricula);
+        System.out.println(matricula);
+        return "matricula/form";
     }
-
-    @DeleteMapping("/{idMatricula}")
-    public ResponseEntity<Void> deletematricula(@PathVariable int idMatricula) {
-        Optional<Matricula> matricula = matriculaServiceImpl.getMatriculaById(idMatricula);
-        if (matricula.isPresent()) {
-            matriculaServiceImpl.deleteMatricula(matricula.get().getIdMatricula());
-            return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    
+    // DELETE
+    @GetMapping("/eliminar/{id}")
+    public String deleteMatricula(@PathVariable int id) {
+        matriculaServiceImpl.deleteMatricula(id);
+        return "redirect:/matricula/lista";
     }
+    
 
 }

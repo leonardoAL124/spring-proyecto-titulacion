@@ -9,8 +9,6 @@ public interface MatriculaService {
 
     Matricula saveMatricula(Matricula matricula);
 
-    Matricula updateMatricula(Matricula matricula);
-
     List<Matricula> getMatriculas();
 
     Optional<Matricula> getMatriculaById(int idMatricula);

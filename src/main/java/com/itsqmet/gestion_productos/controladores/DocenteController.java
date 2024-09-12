@@ -1,16 +1,16 @@
 package com.itsqmet.gestion_productos.controladores;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import com.itsqmet.gestion_productos.modelos.Docente;
 import com.itsqmet.gestion_productos.servicios.impl.DocenteServiceImpl;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 @RequestMapping("/docente")
@@ -19,49 +19,41 @@ public class DocenteController {
     @Autowired
     DocenteServiceImpl docenteServiceImpl;
 
-    @PostMapping("path")
-    public ResponseEntity<Docente> saveDocente(@RequestBody Docente docente) {
-        try {
-            Docente savedDocente = docenteServiceImpl.saveDocente(docente);
-            return new ResponseEntity<>(savedDocente, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    // CREATE
+    @GetMapping("/form")
+    public String showForm(Model model) {
+        model.addAttribute("docente", new Docente());
+        return "docente/form";
     }
-
-    @PutMapping
-    public ResponseEntity<Docente> updateDocente(@RequestBody Docente docente) {
-        try {
-            Docente updatedDocente = docenteServiceImpl.updateDocente(docente);
-            return new ResponseEntity<>(updatedDocente, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    
+    @PostMapping("/form")
+    public String createDocente(Docente docente) {
+        docenteServiceImpl.saveDocente(docente);
+        return "redirect:/docente/lista";
     }
-
-    @GetMapping
-    public ResponseEntity<List<Docente>> getAllDocentes() {
-        return new ResponseEntity<>(docenteServiceImpl.getDocentes(), HttpStatus.OK);
+    
+    // READ
+    @GetMapping("/lista")
+    public String getAllDocentes(Model model) {
+        List<Docente> docentes = docenteServiceImpl.getDocentes();
+        model.addAttribute("docentes", docentes);
+        return "docente/lista";
     }
-
-    @GetMapping("/{idDocente}")
-    public ResponseEntity<Docente> getDocenteById(@PathVariable int idDocente) {
-        Optional<Docente> docente = docenteServiceImpl.getDocenteById(idDocente);
-        if (docente.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(docente.get(), HttpStatus.OK);
+    
+    // UPDATE
+    @GetMapping("/editar/{id}")
+    public String updateDocente(@PathVariable int id, Model model) {
+        Docente docente = docenteServiceImpl.getDocenteById(id).get();
+        model.addAttribute("docente", docente);
+        return "docente/form";
     }
-
-    @DeleteMapping("/{idDocente}")
-    public ResponseEntity<Void> deleteDocente(@PathVariable int idDocente) {
-        Optional<Docente> docente = docenteServiceImpl.getDocenteById(idDocente);
-        if (docente.isPresent()) {
-            docenteServiceImpl.deleteDocente(docente.get().getIdDocente());
-            return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    
+    // DELETE
+    @GetMapping("/eliminar/{id}")
+    public String deleteDocente(@PathVariable int id) {
+        docenteServiceImpl.deleteDocente(id);
+        return "redirect:/docente/lista";
     }
+    
 
 }

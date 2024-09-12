@@ -22,11 +22,6 @@ public class DocenteServiceImpl implements DocenteService{
     }
 
     @Override
-    public Docente updateDocente(Docente docente) {
-        return docenteRepository.save(docente);
-    }
-
-    @Override
     public List<Docente> getDocentes() {
         return docenteRepository.findAll();
     }

@@ -9,8 +9,6 @@ public interface DocenteService {
 
     Docente saveDocente(Docente docente);
 
-    Docente updateDocente(Docente docente);
-
     List<Docente> getDocentes();
 
     Optional<Docente> getDocenteById(int idDocente);

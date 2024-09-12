@@ -9,8 +9,6 @@ public interface CursoService {
 
     Curso saveCurso(Curso curso);
 
-    Curso updateCurso(Curso curso);
-
     List<Curso> getCursos();
 
     Optional<Curso> getCursoById(int idCurso);
