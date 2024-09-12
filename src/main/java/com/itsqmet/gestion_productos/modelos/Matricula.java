@@ -10,14 +10,16 @@ import lombok.Data;
 public class Matricula {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idMatricula;
+    
     private Date fechaMatricula;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "idEstudiante")
     private Estudiante estudiante;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "idCurso")
     private Curso curso;
 

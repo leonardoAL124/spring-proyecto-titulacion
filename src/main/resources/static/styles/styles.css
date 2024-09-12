@@ -1,0 +1,13 @@
+.carrusel-posicion{
+    align-items: center;
+    float: none; 
+    margin: 0 auto;
+}
+
+.carrusel-texto-fondo{
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.carreras-titulo {
+    text-align: center;
+}

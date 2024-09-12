@@ -2,8 +2,7 @@ package com.itsqmet.gestion_productos.modelos;
 
 import java.io.Serializable;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
@@ -11,7 +10,9 @@ import lombok.Data;
 public class Docente implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idDocente;
+
     private String nombre;
     private String apellido;
     private String email;
